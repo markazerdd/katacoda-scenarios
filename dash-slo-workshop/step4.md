@@ -1,47 +1,52 @@
-# Create a service level indicator (SLI) and service level objective (SLO)
+# Create a SLO
 
-Navigate to create a new SLI and SLO. You can get there by clicking through to the sub-nav item under Monitors, **Monitors -> Service Level Objectives** or going directly to https://app.datadoghq.com/slo/new
+Navigate to create a new SLO to track the error rate of the GET requests for accessing our cart. You can get there by clicking through to the sub-nav item under Monitors, **Monitors -> SLOs** or going directly to https://app.datadoghq.com/slo
 
-![SLO Nav](../assets/slo-nav.png)
-
+## Replace ../assets/slo-nav.png
 
 And New SLO in the top right corner: 
-![New SLO](../assets/new-slo.png)
+
+## Replace ../assets/new-slo.png
 
 ## Identify the SLI 
 
-There are a couple of options for us: `Monitor Based` or `Event Based`. But we care about availability and error rate so we'll select `Event Based` under `Define The Source` for our SLI creation. Using event based we can track percentage of requests that are successful. 
+There are a couple of options for us: `Metric Based` or `Monitor Based`.
 
-**First step:** In the numerator field select `trace.flask.request.hits` scoped to the service and resource we care about: `service:frontend`, `resource_name:post_/add_pump`, `env:slo-workshop`. The numerator represents all of your “good” (successful) hits.
+Metric Based SLOs take a count-based approach to defining the SLI. The SLO will track a success ratio of a metric(s) that corresponds to good events (numerator) over a metric(s) that correspond to total events (denominator).
 
-![Editor](../assets/sli-edit.png)
+Monitor Based SLOs take a time-based approach to defining the SLI. The SLO will track how much time an existing Datadog monitor(s) spends in the ALERT state (bad) vs a non-ALERT state (good).
 
+In this case, we care about availability and error rate so we'll select `Metric Based` under `Define The Source` for our SLI creation. Using metric based we can set a target percentage of requests that should be successful. 
 
-**Second step:** Defining the denominator. For this service we need to add a query summing two metrics `trace.flask.request.hits` and `trace.flask.request.errors` to get the total of requests.  
+**First step:** We need to define what our good events are. In the previous step, we mentioned that we have two trace metrics we can use for this GET request: `trace.rack.request.hits` and `trace.rack.request.errors`. However, the metrics correspond to total events abd bad events, respectively. So how are we supposed to define good events?
 
-To add a second query: click advanced, change the metric, `sum a + b`
+Simple! Good events is just total events - bad events and we can configure the numerator query with this arithmetic!
 
-![Advanced](../assets/advanced.png)
+1. In the numerator field select `trace.rack.request.hits` 
+2. Click on **Advanced...** 
+3. Press the **Add Query** button, a second metric query row will appear labelled *b*
+4. For metric b, select `trace.rack.request.errors`. Since there haven’t been any errors, you’ll probably need to edit the query directly by clicking `</>` and entering `trace.rack.request.errors`. 
+## Replace ../assets/error-metric.png
+5. Change the expression `a + b` to `a - b`
+6. For both metrics make sure to scope them down to the resource we are tracking by selecting `service:store-frontend`, `resource_name:spree::rdercontroller_edit` and `env:ruby-shop` in the **from** clause of both metrics. 
 
+This subtraction query now repesents all “good” (successful) GET requests to the cart.
 
-Since there haven’t been any errors, you’ll probably need to edit the query directly by clicking `</>` and entering `trace.flask.request.errors`. 
+## Replace ../assets/sli-edit.png
 
-![Error metric](../assets/error-metric.png)
- 
+**Second step:** We now need to define our total events. The metric `trace.rack.request.hits` already represents total events, so select it and make sure to also scope it down to `service:store-frontend`, `resource_name:spree::rdercontroller_edit` and `env:ruby-shop` in the **from** clause.
 
-Note: in this editor you’ll want to `sum by` to get the sum of all of your requests rather than an avg of them. 
-
-![Sum by](../assets/sum-by.png)
+## Replace ![Advanced](../assets/advanced.png)
 
 ## Set the SLO 
 
 Next we set our SLO target and time window we are measuring against. 
 
-![Time Window](../assets/time-window.png)
+## Replace ![Time Window](../assets/time-window.png)
 
-Select 99% over 30 day time window. 
+Select 99% over 7 day time window. 
 
-This means that we are setting an SLO to say that 99% of requests to the `add_pump` endpoint must be successful over 30 days. You can even use this as your title! 
+This means that we are setting an SLO to say that 99% of the GET requests for the cart must be successful over the past 7 days. You can even use this as your title! 
 
 *Optionally, you can add a description and tag your SLO.* 
 
@@ -51,6 +56,6 @@ Click save!
 
 Check out your data on the SLO detail page! 
 
-Go back to our water pump app and add generate requests by adding more pumps! Click on IoT Project in Katacoda to open the app.
+Go back to the web app and view/update your cart to generate more requests!
 
-When you first check it out, it’ll likely say 100%. With the nature of the workshop, there aren’t any errors yet (and also a lower number of requests). But in our next step we will cause chaos and produce failure in the systems.
+When you first check it out, it’ll likely say 100%. With the nature of the workshop, there aren’t any errors yet (and also a lower number of requests). But in our next step we will purposely introduce errors into our application.

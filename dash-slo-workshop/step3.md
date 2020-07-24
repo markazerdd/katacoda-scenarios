@@ -1,30 +1,22 @@
 # Exploring available metrics for SLIs 
 
-Let’s explore what we can have available in Datadog. There are a few ways to do this. You can explore and search for metrics in the notebooks, across your monitors, and dashboards or across your services instrumented with APM like what we will be doing here. To dig into the services, resources, and the available metrics, let’s search our traces: https://app.datadoghq.com/apm/search 
+We're going to need to find metrics that can act as our SLIs. With Datadog we have several different options, we can explore and search for metrics in notebooks, across your monitors and dashboards, or across your services instrumented with APM like what we will be doing here. To dig into the services, resources, and the available metrics, let’s search our traces: https://app.datadoghq.com/apm/search 
 
-![Trace Search](../assets/trace-search.png)
+## Replace ../assets/trace-search.png
 
+We care about users being able to manage items in their carts so let’s scope our trace search down. In the search facets on the left, select the following: 
 
-We care about users being able to add pumps so let’s scope down to the `add_pump` resource by using the facets on the left side of the screen. This is core to our `frontend` service. 
+1. `store-frontend` from the **Service** category
+2. `Spree::OrdersController#edit` from the **Resource** category
 
-*[Optional] If you'd like, you can click on any of these traces to show the transaction:*
+We now see the traces for trying to access our carts. We see that none of the requests to the `Spree::OrdersController#edit` resource have resulted in errors so far. 
 
-![Trace View](../assets/trace-view.png)
+## Replace ../assets/trace-view.png
 
+But eventually will look something like this when we purposely introduce errors: 
 
+## ../assets/frontend-errors.png
 
-You can see that a `POST` to 
-`/add_pump` in the frontend service (frontend/api.py) calls a `POST` request to `/devices` in the pumps-service (pumps-api/pumps.py).
+You can see that these traces consist of a `GET` to `/cart` in the frontend service. We're going to want this request to be successful and fast to ensure customers have a positive end user experience with storedog.
 
-
-Let’s go to the frontend service dashboard. In the side nav click: **APM -> Services -> Frontend**
-
-We haven’t purposefully introduced any errors *yet*, since we just got started. So the services dashboard may look something like this: 
-
-![Frontend Dash](../assets/frontend-dash.png)
-
-But eventually will look something like this: 
-
-![Frontend Errors](../assets/frontend-errors.png)
-
-Remember before we mentioned that the APM metrics were instrumented for the `trace.flask.` namespace. So the metrics we'll focus on are called `trace.flask.request.hits` and `trace.flask.request.errors`. Let’s use this to create our first SLI. 
+This particular request is instrumented under the `trace.rack.` namespace. So the metrics we'll focus on are called `trace.rack.request.hits` and `trace.rack.request.errors`. Let’s use this to create our first SLO. 

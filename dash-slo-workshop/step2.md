@@ -1,27 +1,15 @@
-# Exploring our services and user journeys 
+# Exploring our services and user journeys  
 
-Let’s take a quick tour of our application. 
+Before we think about what SLOs to set, we need to make sure we understand what important aspects of the application need SLOs in the first place. What would you expect to be able to do with an e-commerce application like this one? What are the critical user journeys that we would want to ensure are working well?
 
-You can tour the application by examining the content of the `docker-compose.yml` file. This application was originally developed for a Distributed Tracing workshop to showcase how Datadog APM integrates with multiple programming languages and technologies. 
+For any e-commerce application application, we would reasonably expect to be able to login, search for items, view item details, manage items in our cart, and checkout our items for purchase. Many of these features appear to be broken right now in storedog.
 
-Today we'll focus on 3 containers:
- 
-* The agent: it is necessary to collect metrics and traces from the other containers
-* Frontend: a Python Flask application that receives calls and routes them to different backend services, the code lives in the `./frontend` folder. It also serves a React Single Page Application as a static file built from the `./single-page-frontend` folder.
-* Pumps: another Flask application that receives calls from the frontend related to the water pumps. The code lives in the `./pumps-api` folder.
+In the interest of time, let's focus on one particular user journey: managing items in your cart. Go into storedog and try adding at least 3 different items to your cart.
 
-Both Flask applications are automatically instrumented by Datadog APM (see the `command` statements in `docker-compose.yaml`) which will generate metrics in the `trace.flask.` namespace. Hint: remember this for later.
+If this particular user journey were to become unreliable, our hypothetical customers might not be able complete the purchases that they want to make. Since this user journey is so critical to this application, that makes it a great candidate for setting an SLO to ensure its reliability.
 
-This Katacoda environment allows you to modify the Python code and see the results. Simply browse the code in the editor and edit it then type CTRL+c in the terminal to quit Docker Compose and start it again with the `docker-compose up` command.
+## Placeholder for add item image
 
+Now that we've selected a critical user journey, what Service Level Indicators (SLIs) should we track? Since this is a request/response endpoint, it would be a good idea to set an SLO on its success rate and its latency.
 
-So let's think about reliability of this system. To start tracking SLIs we'll consider what our user journey should be. Go to the water pump web app and explore! Click on IoT Project in Katacoda to open the app.
-
-One of the main functions on this page is the ability to add a new water pump. Can you add one? 
-
-Go to the app and add new pumps! 
-
-![Water Pump](../assets/water-pump-app.png)
-
-Can you identify SLIs for our user journey? 
-
+Let's head back into Datadog to get started!

@@ -1,35 +1,29 @@
 # Modeling failure in our systems
 
-Let's start introducing errors by killing containers! Explore what happens to our error budget. 
+Let's start introducing errors by switching images! This will allow us to explore what happens to our SLO's status and error budget. 
  
-In the real world, there’s a lot of traffic and there’s definitely going to be some errors. 
-For now we are dealing with our small water pump app. 
+In a real world scenario, a popular e-commerce site will receive a lot of traffic and there is eventually going to be some errors introduced in the application for various reasons. For now we are dealing with our hypothetical web store. 
 
-Before we start killing containers, maybe check back to the app and add more pumps! Click on IoT Project in Katacoda to open the app.
+Before we switch images, be sure to go back into the storedog application and perform more operations on your cart to increase the total number of requests!
+
+After your done, close all storedog tabs that you have open.
  
-Open a new terminal window by clicking the + sign within Katacoda. There is an option called Open New Terminal.
+In the terminal window where you currently have docker-compose running, press CTRL + C to stop the command. Wait a few seconds for the process to gracefully terminate.
 
-Once the terminal is open run the following command to kill the container running the pumps: 
-`docker stop $(docker ps -aqf "name=sloworkshop_pumps")`
+Now enter a new docker-compose command with your `<api key>` using the broken image like so:
 
-As an alternative and if you are more familiar with docker, try removing a running service with a:
+`DD_API_KEY=<api key> docker-compose -f docker-compose-broken-instrumented.yml up`
 
-`$ docker ps`
-
-`$ docker kill <containerid>`
+Wait a few minutes until the application has fully started again.
  
-Kill the container running the pumps: 
-
-![Container IDs](../assets/container-ids.png)
+Try going back to the storedog homepage, selecting a product and adding it to your cart. What happens when you do this? You should be getting a NoMethodExists error, although in the real world this could have been any error that causes the add item request to fail. Press the back button in your browser and try adding other items to your cart to induce more errors.
  
-Go back to the SLO details page. What happens? 
+Go back to the SLO details page. What do you see now? Your SLO status and error budget should no longer be 100% anymore 
 
-![SLI Detail Page](../assets/detail-page-errors.png)
-
+## Replace ![SLI Detail Page](../assets/detail-page-errors.png)
  
-Let’s zoom into that bar graph for more detail: 
+Try hovering over the different colored bars in the bar graph and you'll be able to see a count of good and bad events that occurred at a given time: 
 
-![Bar Graph](../assets/graph-errors.png)
+## Replace ![Bar Graph](../assets/graph-errors.png)
 
-
-Remember, if you kill the frontend, the rest of the downstream services will die. If you break something, switch back to your terminal running docker-compose. Remember, you can CTRL+c, followed by pressing up to rerun the last command and bring back up the entire suite of services.
+Over time if these errors were to continue at a high pace, our error budget would quickly deplete and we might be at risk of breaching our Service Level Agreements (SLAs) with customers. By being diligent with creating and managing SLOs we can uncover user experience issues and take action to resolve them quickly!
