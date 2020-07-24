@@ -6,7 +6,7 @@
       {
         "title": "Step 1",
         "text": "step1.md",
-        "courseData": "background.sh"
+        "code": "foreground.sh"
       },
       {
         "title": "Step 2",
@@ -34,9 +34,7 @@
       }
     ],
     "intro": {
-      "text": "intro.md",
-      "code": "foreground.sh",
-      "courseData": "background.sh"
+      "text": "intro.md"
     },
     "finish": {
       "text": "finish.md"
@@ -44,7 +42,7 @@
   },
   "environment": {
     "uilayout": "editor-terminal",
-    "uieditorpath": "/slo-workshop",
+    "uieditorpath": "/ecommerce-workshop",
     "showdashboard": true,
     "dashboards": [{"name": "storedog", "port": 3000}]
   },
