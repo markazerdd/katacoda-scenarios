@@ -1,8 +1,18 @@
-# Exploring our services and user journeys  
+# Exploring our application and its user journeys  
 
-Before we think about what SLOs to set, we need to make sure we understand what important aspects of the application need SLOs in the first place. What would you expect to be able to do with an e-commerce application like this one? What are the critical user journeys that we would want to ensure are working well?
+Take the opportunity to explore the web app by clicking on the `storedog` tab in the Katacoda terminal to open it in your browser.  
 
-For any e-commerce application application, we would reasonably expect to be able to login, search for items, view item details, manage items in our cart, and checkout our items for purchase. Many of these features appear to be broken right now in storedog.
+Hop back into Datadog, and check to see if the services have appeared. The page should look something like this: 
+
+## Replace ../assets/services-nav.png
+
+Eventually, when you switch to using the broken image you'll see parts of the application experiencing high error rates:
+
+## Replace ../assets/services-list.png
+
+Exploring the application is an important step in the SLO creation process. Before we think about what SLOs to set, we need to make sure we understand what important aspects of the application need SLOs in the first place. What would you expect to be able to do with an e-commerce application like this one? What are the critical user journeys that we would want to ensure are working well?
+
+For any e-commerce application application, we would reasonably expect to be able to login, search for items, view item details, manage items in our cart, and check out our items for purchase. 
 
 In the interest of time, let's focus on one particular user journey: managing items in your cart. Go into storedog and try adding at least 3 different items to your cart.
 
