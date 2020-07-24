@@ -1,6 +1,6 @@
 {
-  "title": "Ensuring Reliability with SLOs Workshop",
-  "description": "Service Level Objectives with Datadog",
+  "title": "Ensuring Reliability with SLOs",
+  "description": "Using Service Level Objectives in Datadog",
   "details": {
     "steps": [
       {
@@ -46,11 +46,9 @@
     "uilayout": "editor-terminal",
     "uieditorpath": "/slo-workshop",
     "showdashboard": true,
-    "dashboards": [{"name": "IoT Project", "port": 5000}]
+    "dashboards": [{"name": "storedog", "port": 3000}]
   },
   "backend": {
-    "imageid": "datadog-ubuntu",
-    "reuseConnection": true,
-    "livetime": "3h"
+    "imageid": "ubuntu"
   }
 }
