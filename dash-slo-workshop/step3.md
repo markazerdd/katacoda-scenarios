@@ -2,7 +2,7 @@
 
 We're going to need to find metrics that can act as our SLIs. With Datadog you have several different options: you can explore and search for metrics in notebooks, across your monitors and dashboards, or across your services instrumented with APM like what we will be doing here. To dig into the services, resources, and the available metrics, let’s search our traces: https://app.datadoghq.com/apm/search 
 
-## Replace ../assets/trace-search.png
+![Trace Search](../assets/trace-search.png)
 
 We care about users being able to manage items in their carts so let’s scope our trace search down. In the search facets on the left, select the following: 
 
@@ -11,11 +11,11 @@ We care about users being able to manage items in their carts so let’s scope o
 
 You now can see the traces for trying to access your cart. We see that none of the requests to the `Spree::OrdersController#edit` resource have resulted in errors so far. 
 
-## Replace ../assets/trace-view.png
+![Trace View](../assets/trace-view.png)
 
 But eventually will look something like this when we purposely introduce errors: 
 
-## ../assets/frontend-errors.png
+![Trace Errors](../assets/trace-errors.png)
 
 You can see that these traces consist of requests to `/cart` in the frontend service. We're going to want these requests to be successful and fast to ensure customers have a positive end user experience with storedog.
 

@@ -18,10 +18,10 @@ Try going back to the storedog homepage, selecting a product and adding it to yo
  
 Go back to the SLO details page. What do you see now? Your SLO status and error budget should no longer be 100% anymore .
 
-## Replace ![SLI Detail Page](../assets/detail-page-errors.png)
+![SLO Detail Errors](../assets/details-errors.png)
  
 Try hovering over the different colored bars in the bar graph and you'll be able to see a count of good and bad events that occurred at a given time: 
 
-## Replace ![Bar Graph](../assets/graph-errors.png)
+![Bar Graph Errors](../assets/graph-errors.png)
 
 Over time if these errors were to continue at a high pace, our error budget would quickly deplete and we might be at risk of breaching our Service Level Agreements (SLAs) with customers. By being diligent with creating and managing SLOs for critical user journeys we can uncover user experience issues and take action to resolve them quickly to reduce their impact!
