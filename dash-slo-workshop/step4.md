@@ -1,12 +1,8 @@
 # Create a SLO
 
-Navigate to create a new SLO to track the error rate of the requests for managing our cart. You can get there by clicking through to the sub-nav item under Monitors, **Monitors -> SLOs** or going directly to https://app.datadoghq.com/slo
+Navigate to create a new SLO to track the error rate of the requests for managing our cart. You can get there by clicking through to the sub-nav item under Monitors, **Monitors -> New SLO** or going directly to https://app.datadoghq.com/slo
 
-## Replace ../assets/slo-nav.png
-
-In the top right corner of the page, click the **New SLO +** button: 
-
-## Replace ../assets/new-slo.png
+![SLO navigation](../assets/slo-nav.png)
 
 ## Identify the SLI 
 
@@ -25,8 +21,8 @@ Simple! Good events are just the total events minus the bad events and we can co
 1. In the numerator field select `trace.rack.request.hits` 
 2. Click on **Advanced...** 
 ![Advanced Query](../assets/advanced.png)
-3. Press the **Add Query** button, a second metric query row will appear labelled *b*
-4. For metric b, select `trace.rack.request.errors`. Since there haven’t been any errors, you’ll probably need to edit the query directly by clicking `</>` and entering `sum:trace.rack.request.errors{service:store-frontend,resource_name:spree::orderscontroller_edit,env:ruby-shop}.as_count()` manually. 
+1. Press the **Add Query** button, a second metric query row will appear labelled *b*
+2. For metric b, select `trace.rack.request.errors`. Since there haven’t been any errors, you’ll probably need to edit the query directly by clicking `</>` and entering `sum:trace.rack.request.errors{service:store-frontend,resource_name:spree::orderscontroller_edit,env:ruby-shop}.as_count()` manually. 
 ![Error Metric Query](../assets/error-metric.png)
 1. Change the expression `a + b` to `a - b`
 2. For both metrics make sure to scope them down to the resource we are tracking by selecting `service:store-frontend`, `resource_name:spree::ordercontroller_edit` and `env:ruby-shop` in the **from** clause of both metrics. 

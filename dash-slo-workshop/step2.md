@@ -2,7 +2,7 @@
 
 Take the opportunity to explore the web app by clicking on the `storedog` tab in the Katacoda terminal to open it in your browser.  
 
-Hop back into Datadog, and check to see if the services have appeared by going to the APM Services page by navigating to **APM -> Services**, or by clicking https://app.datadoghq.com/apm/services. 
+Sign in into Datadog, and check to see if the services have appeared by going to the APM Services page by navigating to **APM -> Services**, or by clicking https://app.datadoghq.com/apm/services. 
 
 ![Services Navigation](../assets/services-nav.png)
 

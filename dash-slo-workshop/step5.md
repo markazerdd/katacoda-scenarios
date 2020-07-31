@@ -8,9 +8,11 @@ After you're done, close all storedog tabs that you have open in your browser.
  
 In the first terminal window where you currently have docker-compose running, press CTRL + C to stop the command. Wait 10 to 15 seconds until docker-compose gracefully stops and you regain the ability to type commands in the terminal window.
 
-Now enter a new docker-compose command with your `<api key>` using the broken image like so:
+Now enter a new docker-compose command using the broken image like so:
 
-`DD_API_KEY=<api key> docker-compose -f ./docker-compose-files/docker-compose-broken-instrumented.yml up`
+<pre data-target="clipboard">
+docker-compose -f ./docker-compose-files/docker-compose-broken-instrumented.yml up
+</pre>
 
 Wait a few minutes until the application has fully started again.
  
